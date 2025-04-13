@@ -1,0 +1,53 @@
+.try-on-page {
+  padding: 80px 20px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.try-on-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.upload-section {
+  padding: 2rem;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.file-input {
+  margin: 1rem 0;
+}
+
+.upload-info {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.preview-section {
+  min-height: 400px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.placeholder {
+  text-align: center;
+  color: #666;
+}
+
+.placeholder i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
