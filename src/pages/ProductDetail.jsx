@@ -21,15 +21,7 @@ function ProductDetail() {
       setLoading(true);
 
       if (location.state?.product) {
-        try {
-          setProduct({
-            ...location.state.product,
-            images: [location.state.product.image]
-          });
-        } catch (err) {
-          setError('Error processing product data');
-          console.error('Error processing product data:', err);
-        }
+        setProduct(location.state.product);
         setLoading(false);
         return;
       }

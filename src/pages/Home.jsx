@@ -178,7 +178,20 @@ function Home() {
 
   const handleProductClick = (product) => {
     navigate(`/product/${product.id}`, {
-      state: { product }
+      state: {
+        product: {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          images: [product.image],
+          description: product.description || 'No description available',
+          category: product.category,
+          sizes: product.sizes || [],
+          details: [],
+          care: []
+        }
+      }
     });
   };
 
