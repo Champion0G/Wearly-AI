@@ -13,6 +13,7 @@ const Cart = lazy(() => import('./pages/Cart'));
 const Login = lazy(() => import('./pages/Login'));
 const Signup = lazy(() => import('./pages/Signup'));
 const Profile = lazy(() => import('./pages/Profile'));
+const TryOn = lazy(() => import('./pages/TryOn'));
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/try-on" element={<TryOn />} />
               </Routes>
             </Suspense>
           </div>

@@ -1,47 +1,98 @@
 import { useState } from 'react';
-import '../styles/tryOn.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import '../styles/tryon.css';
 
 function TryOn() {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [downloadedProduct, setDownloadedProduct] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+  // Check if we have a product
+  if (!location.state?.product) {
+    navigate('/');
+    return null;
+  }
+
+  const downloadProductImage = async () => {
+    try {
+      const response = await fetch(location.state.product.image);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'product.jpg';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      setDownloadedProduct(true);
+    } catch (err) {
+      console.error('Download error:', err);
+      setError('Failed to download product image. Please try again.');
     }
   };
 
+  const handleTryOn = () => {
+    window.open('https://huggingface.co/spaces/Kwai-Kolors/Kolors-Virtual-Try-On', '_blank');
+  };
+
   return (
-    <div className="try-on-page">
-      <h1>Virtual Try-On</h1>
-      <div className="try-on-container">
-        <div className="upload-section">
-          <h2>Upload Your Photo</h2>
-          <input 
-            type="file" 
-            accept="image/*" 
-            onChange={handleImageUpload}
-            className="file-input" 
-          />
-          <p className="upload-info">
-            Supported formats: JPG, PNG. Max size: 5MB
-          </p>
+    <div className="tryon-page">
+      <h1>Virtual Try-On Experience</h1>
+      
+      <div className="tryon-container">
+        <div className="product-section">
+          <h2>Selected Product</h2>
+          <div className="product-preview">
+            <img src={location.state.product.image} alt={location.state.product.name} />
+            <h3>{location.state.product.name}</h3>
+            <p className="product-price">${location.state.product.price}</p>
+          </div>
+          <button 
+            className="download-button"
+            onClick={downloadProductImage}
+            disabled={downloadedProduct}
+          >
+            {downloadedProduct ? '✓ Product Image Downloaded' : 'Download Product Image'}
+          </button>
         </div>
-        
-        <div className="preview-section">
-          {selectedImage ? (
-            <img src={selectedImage} alt="Preview" className="preview-image" />
-          ) : (
-            <div className="placeholder">
-              <i className="fas fa-user"></i>
-              <p>Your photo will appear here</p>
+
+        <div className="instructions">
+          <h2>How to Try On This Product</h2>
+          <div className="steps-container">
+            <div className="step">
+              <div className="step-number">1</div>
+              <p>Download the product image using the button above</p>
             </div>
-          )}
+            <div className="step">
+              <div className="step-number">2</div>
+              <p>Click "Open Virtual Try-On" to access the Kolors tool</p>
+            </div>
+            <div className="step">
+              <div className="step-number">3</div>
+              <p>In the Kolors tool:</p>
+              <ul>
+                <li>Upload your full-body photo in the "Person image" section</li>
+                <li>Upload the downloaded product image in the "Garment image" section</li>
+                <li>Click "Run" to see yourself wearing the product!</li>
+              </ul>
+            </div>
+          </div>
         </div>
+
+        <button 
+          className="try-on-button"
+          onClick={handleTryOn}
+        >
+          Open Virtual Try-On
+        </button>
+
+        {error && (
+          <div className="error-message">
+            <p>{error}</p>
+          </div>
+        )}
       </div>
     </div>
   );

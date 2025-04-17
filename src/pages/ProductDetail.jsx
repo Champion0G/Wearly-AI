@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/productDetail.css';
 import { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
@@ -7,6 +7,7 @@ import { CartContext } from '../context/CartContext';
 function ProductDetail() {
   const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -96,6 +97,10 @@ function ProductDetail() {
     setTimeout(() => setAddedToCart(false), 3000);
   };
 
+  const handleTryOn = () => {
+    navigate('/try-on', { state: { product } });
+  };
+
   if (loading) {
     return (
       <div className="loading-container">
@@ -164,7 +169,7 @@ function ProductDetail() {
               <h3>Virtual Try-On Available!</h3>
               <p>See how this looks on you using our AR technology</p>
             </div>
-            <button className="try-on-button" onClick={() => window.location.href='/try-on'}>
+            <button className="try-on-button" onClick={handleTryOn}>
               Try It On
             </button>
           </div>
