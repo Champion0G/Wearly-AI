@@ -1,0 +1,62 @@
+.error-boundary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 2rem;
+  text-align: center;
+  background: #fff5f5;
+}
+
+.error-content {
+  max-width: 500px;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(229, 62, 62, 0.1);
+  border: 1px solid #feb2b2;
+}
+
+.error-content h2 {
+  color: #e53e3e;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.error-content p {
+  color: #4a5568;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.retry-button {
+  background: #e53e3e;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retry-button:hover {
+  background: #c53030;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .error-boundary {
+    padding: 1rem;
+    min-height: 300px;
+  }
+
+  .error-content {
+    padding: 1.5rem;
+  }
+
+  .error-content h2 {
+    font-size: 1.25rem;
+  }
+} 
