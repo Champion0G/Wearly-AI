@@ -16,17 +16,46 @@ function TryOn() {
 
   const downloadProductImage = async () => {
     try {
+      // Create a clean filename from the product name
+      const cleanProductName = location.state.product.name
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+      
+      const filename = `wearly-${cleanProductName}.jpg`;
+
+      // Fetch the image
       const response = await fetch(location.state.product.image);
       const blob = await response.blob();
+      
+      // For mobile devices, create a temporary link with download attribute
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'product.jpg';
+      a.download = filename;
+      
+      // For iOS Safari compatibility
+      if (navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {
+        a.target = '_blank';
+        a.setAttribute('rel', 'noopener noreferrer');
+      }
+      
       document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
+      
+      // Cleanup
+      setTimeout(() => {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 100);
+      
       setDownloadedProduct(true);
+      
+      // Show success message for mobile users
+      if (/Mobi|Android/i.test(navigator.userAgent)) {
+        setError('Image saved! Check your Downloads or Gallery.');
+      }
     } catch (err) {
       console.error('Download error:', err);
       setError('Failed to download product image. Please try again.');
