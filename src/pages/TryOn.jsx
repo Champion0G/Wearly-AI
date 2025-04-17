@@ -91,21 +91,41 @@ function TryOn() {
           <h2>How to Try On This Product</h2>
           <div className="steps-container">
             <div className="step">
-              <div className="step-number">1</div>
-              <p>Download the product image using the button above</p>
+              <div className="step-number">STEP 1</div>
+              <div className="step-content">
+                <h3>Download the Product</h3>
+                <p>Click the "Download Product Image" button above to save the garment to your device</p>
+                {downloadedProduct && <span className="step-status completed">✓ Completed</span>}
+              </div>
             </div>
+
             <div className="step">
-              <div className="step-number">2</div>
-              <p>Click "Open Virtual Try-On" to access the Kolors tool</p>
+              <div className="step-number">STEP 2</div>
+              <div className="step-content">
+                <h3>Open Try-On Tool</h3>
+                <p>Click the "Open Virtual Try-On" button below to launch the Kolors AI tool</p>
+              </div>
             </div>
+
             <div className="step">
-              <div className="step-number">3</div>
-              <p>In the Kolors tool:</p>
-              <ul>
-                <li>Upload your full-body photo in the "Person image" section</li>
-                <li>Upload the downloaded product image in the "Garment image" section</li>
-                <li>Click "Run" to see yourself wearing the product!</li>
-              </ul>
+              <div className="step-number">STEP 3</div>
+              <div className="step-content">
+                <h3>Upload & Process</h3>
+                <div className="sub-steps">
+                  <div className="sub-step">
+                    <span className="sub-step-icon">📸</span>
+                    <p>Upload your full-body photo in the "Person image" section</p>
+                  </div>
+                  <div className="sub-step">
+                    <span className="sub-step-icon">👕</span>
+                    <p>Upload the downloaded product in the "Garment image" section</p>
+                  </div>
+                  <div className="sub-step">
+                    <span className="sub-step-icon">✨</span>
+                    <p>Click "Run" and see the magic happen!</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
